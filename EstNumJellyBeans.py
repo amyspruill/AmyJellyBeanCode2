@@ -32,8 +32,8 @@ class NumJellyEstimator:
 
         # Check that the value is between zero and one.
         if ((frac <= 0.0) or (frac >= 1.0)):
-            print "\nError: Fraction of land used for sugar must be between"\
-                  +" 0.0 and 1.0.\n"
+            print( "\nError: Fraction of land used for sugar must be between"\
+                  +" 0.0 and 1.0.\n")
             sys.exit()
 
         # Store the fraction.
@@ -44,9 +44,18 @@ class NumJellyEstimator:
     # \param people integer number of people on earth
     def set_world_pop(self, people):
 
-        # NE24: Add a test for type here
+        # NE24: Make sure world population is a float.
+        # It will be a float (even though the number of people is an integer)
+        # because numbers in scientific notation like 7e9 are floats.
+        assert type(people) is float, \
+            "Error: World population set must be a float."
  
-        # NE24: Add a test for value here
+        # NE24: Make sure the population is greater than zero.
+        if (people <= 0):
+            print( "\nError: World population must be greater than"\
+                  +" 0.\n")
+            sys.exit()
+
 
         # Store the fraction.
         self.worldPop = people
@@ -55,9 +64,16 @@ class NumJellyEstimator:
     ## Set the fraction of people who love the color pink.
     def set_frac_ppl_loving_pink(self, frac):
 
-        # NE24: Add a test for type here
+        # NE24: Make sure fraction of people loving pink is a float.
+        assert type(frac) is float, \
+            "Error: fraction of people loving pink set must be a float."
 
-        # NE24: Add a test for value here
+        # NE24: Make sure fraction of people loving pink is between 0 and 1.
+        if ((frac <= 0.0) or (frac >= 1.0)):
+            print ("\nError: Fraction of people loving pink must be between"\
+                +" 0.0 and 1.0.\n")
+            sys.exit()
+
 
         # Store the fraction.
         self.fracPplLovingPink = frac
@@ -77,8 +93,8 @@ class NumJellyEstimator:
         n = self.fracLand4Sugar * self.worldPop * self.scalingConst
         # If this value is zero, it means that some value didn't get set.
         if (n == 0.0):
-            print "\nError: fraction of land for sugar and world population"\
-                  +"must be set before computing estimate.\n"
+            print ("\nError: fraction of land for sugar and world population"\
+                  +"must be set before computing estimate.\n")
         return int(n)
 
 
@@ -89,11 +105,18 @@ class NumJellyEstimator:
             (1.0 - self.fracPplLovingPink)
         # If this value is zero, it means that some value didn't get set.
         if (n == 0.0):
-            print "\nError: fraction of land for sugar, world population, and"\
+            print ("\nError: fraction of land for sugar, world population, and"\
                   +"fraction of people loving pink must be set before "\
-                  +"computing estimate.\n"
+                  +"computing estimate.\n")
 
         # NE24: What other checks might be useful? What is a better way to do this?
+        # It might be useful to include a check for each individual value to make
+        # sure it  was set, rather than just checking to see if some value was not
+        # set. The error message would then return which particular value did not get
+        # set, which would be more useful to the user who would then know exactly
+        # which value they needed to go back and fix. A better way to do this would be
+        # to implement a try/except format with an exception for each case in which
+        # a value is not set.
 
         return int(n)
 
